@@ -1,4 +1,10 @@
 
+using PerfumeStore.API.Extensions;
+using PerfumeStore.API.Middleware;
+using PerfumeStore.Application;
+using PerfumeStore.Infrastructure;
+using Serilog;
+
 namespace PerfumeStore.API
 {
     public class Program
@@ -8,8 +14,20 @@ namespace PerfumeStore.API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.AddSerilog();
+
+            builder.Services.AddApplication();
+            builder.Services.AddInfrastructure(builder.Configuration);
+            builder.Services.AddDatabase(builder.Configuration);
+            builder.Services.AddIdentityServices();
+            builder.Services.AddJwtAuthentication(builder.Configuration);
+            builder.Services.AddCaching(builder.Configuration);
+            builder.Services.AddSwagger();
 
             builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddControllers();
+
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
@@ -20,12 +38,15 @@ namespace PerfumeStore.API
             {
                 app.MapOpenApi();
             }
+            else
+            {
+                app.UseMiddleware<ExceptionHandlingMiddleware>();
+            }
 
+            app.UseSerilogRequestLogging();
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseAuthorization();
-
-
             app.MapControllers();
 
             app.Run();

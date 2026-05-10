@@ -7,7 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+    <PackageReference Include="MediatR" Version="14.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PerfumeStore.Domain\PerfumeStore.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Products\Commands\DeleteProduct\" />
+    <Folder Include="Features\Products\Commands\CreateProduct\" />
+    <Folder Include="Features\Products\Commands\Models\" />
+    <Folder Include="Features\Products\Commands\UpdateProduct\" />
+    <Folder Include="Features\Products\Models\" />
+    <Folder Include="Features\Products\Queries\GetProductById\" />
+    <Folder Include="Features\Products\Queries\Models\" />
   </ItemGroup>
 
 </Project>
