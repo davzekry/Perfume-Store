@@ -1,8 +1,6 @@
-﻿// API/Extensions/SwaggerExtensions.cs
-using Microsoft.OpenApi.MicrosoftExtensions;         // ← fixes CS0246 + CS0117
-using Swashbuckle.AspNetCore.SwaggerGen;
-using PerfumeStore.API.Filters;
+﻿using PerfumeStore.API.Filters;
 using Microsoft.OpenApi;
+using Microsoft.OpenApi.Models;
 
 namespace PerfumeStore.API.Extensions;
 

@@ -1,5 +1,6 @@
 ﻿// API/Filters/HttpMethodOperationFilter.cs
 using Microsoft.OpenApi;
+using Microsoft.OpenApi.Models;
 using PerfumeStore.Application.Common.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 

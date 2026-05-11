@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PerfumeStore.Application.Common.Interfaces;
+using PerfumeStore.Infrastructure.Interfaces;
 using PerfumeStore.Infrastructure.Services;
+
 
 namespace PerfumeStore.Infrastructure.Extensions;
 

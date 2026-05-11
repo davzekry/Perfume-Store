@@ -1,4 +1,4 @@
-﻿namespace PerfumeStore.Application.Common.Interfaces
+﻿namespace PerfumeStore.Infrastructure.Interfaces
 {
     public interface ICacheService
     {

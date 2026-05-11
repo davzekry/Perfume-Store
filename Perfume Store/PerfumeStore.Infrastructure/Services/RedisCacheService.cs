@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
-using PerfumeStore.Application.Common.Interfaces;
+using PerfumeStore.Infrastructure.Interfaces;
 using System.Text.Json;
 
 namespace PerfumeStore.Infrastructure.Services;

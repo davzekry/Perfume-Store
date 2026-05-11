@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using MediatR;
-using PerfumeStore.Application.Common.Interfaces;
+using PerfumeStore.Infrastructure.Interfaces;
 using PerfumeStore.Application.Common.Models;
+using PerfumeStore.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace PerfumeStore.Application.Features.Products.Queries.GetAllProducts;
 
@@ -15,12 +17,12 @@ public class GetAllProductsHandler
 
     public GetAllProductsHandler(
         PrStoreDbContext db,
-        ICacheService cache,
-        ILogger<GetAllProductsHandler> logger)
+        ICacheService cache)
+        //ILogger<GetAllProductsHandler> logger)
     {
         _db = db;
         _cache = cache;
-        _logger = logger;
+        //_logger = logger;
     }
 
     public async Task<PaginatedList<GetAllProductsDto>> Handle(
@@ -42,21 +44,21 @@ public class GetAllProductsHandler
             {
                 // ── Fix 2: structured logging — message first,
                 //   then one value per {placeholder}, no method groups ─
-                _logger.LogInformation(
-                    "Cache HIT for key {CacheKey} — returning {Count} products",
-                    cacheKey,           // ← value for {CacheKey}
-                    cached.Items.Count);// ← value for {Count}
+                //_logger.LogInformation(
+                //    "Cache HIT for key {CacheKey} — returning {Count} products",
+                //    cacheKey,           // ← value for {CacheKey}
+                //    cached.Items.Count);// ← value for {Count}
 
                 return cached;
             }
         }
 
         // ── Fix 2 (same rule): three placeholders → three values ─────
-        _logger.LogInformation(
-            "Cache MISS — hitting database. Page={Page} PageSize={PageSize} Search={Search}",
-            request.Page,               // ← {Page}
-            request.PageSize,           // ← {PageSize}
-            request.Search ?? "(none)");// ← {Search}
+        //_logger.LogInformation(
+        //    "Cache MISS — hitting database. Page={Page} PageSize={PageSize} Search={Search}",
+        //    request.Page,               // ← {Page}
+        //    request.PageSize,           // ← {PageSize}
+        //    request.Search ?? "(none)");// ← {Search}
 
         var query = _db.Products
             .AsNoTracking()
@@ -85,8 +87,7 @@ public class GetAllProductsHandler
             .Take(request.PageSize)
             .Select(p => new GetAllProductsDto
             {
-                Brand = p.Brand,
-                CategoryName = p.CategoryName,
+                CategoryName = p.Category.Name,
                 Description = p.Description,
                 Id = p.Id,
                 Name = p.Name,
